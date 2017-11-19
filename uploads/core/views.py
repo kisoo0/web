@@ -8,8 +8,13 @@ from uploads.core.forms import DocumentForm
 def index(request):
     return render(request, 'core/index.html')
 
-def home(request):
+
+def uploaded(request):
     documents = Document.objects.all()
+    return render(request, 'core/uploaded.html',{ 'documents': documents })
+
+#def home(request):
+#    documents = Document.objects.all()
     return render(request, 'core/home.html', { 'documents': documents })
 
 
@@ -30,7 +35,7 @@ def model_form_upload(request):
         form = DocumentForm(request.POST, request.FILES)
         if form.is_valid():
             form.save()
-            return redirect('home')
+            return redirect('uploaded')
     else:
         form = DocumentForm()
     return render(request, 'core/model_form_upload.html', {
